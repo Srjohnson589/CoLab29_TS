@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "FLO",
+  "name": "Flo",
   "version": "1.0",
-  "description": "Enhance productivity and thrive with FLO. Embrace reflective learning, improve focus, and bring calmness to your workday by having a north star.",
+  "description": "Enhance productivity and thrive with Flo.",
   "action": {
     "default_icon": {
       "16": "/icon.png",

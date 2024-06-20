@@ -31,7 +31,7 @@ const QuickNotes: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const notesTextareaStyle: React.CSSProperties = {
     resize: 'vertical',
-    width: '200px',
+    minWidth: '250px',
     height: '154px',
     padding: '8px',
     border: '1px solid #D0D5DD',
@@ -52,16 +52,17 @@ const QuickNotes: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <>
-      <textarea
-        value={notes}
-        onChange={handleNoteChange}
-        placeholder="Add study notes here"
-        style={notesTextareaStyle}
-      />
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button onClick={() => convertNotes('doc')} style={notesSaveButtonStyle}>
-          <FontAwesomeIcon icon={faCircleDown} />
-        </button>
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between',}}>
+        <textarea
+          value={notes}
+          onChange={handleNoteChange}
+          placeholder="Add study notes here"
+          style={notesTextareaStyle}
+        />
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button onClick={() => convertNotes('doc')} style={notesSaveButtonStyle}>
+            <FontAwesomeIcon icon={faCircleDown} />
+          </button>
 
         {/* Hey Eric... I feel all the buttons are a little distracting so maybe we  just pick one file type and have that be the "download" button? */}
 
@@ -75,9 +76,10 @@ const QuickNotes: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           Save
         </button> */}
 
-        <button onClick={onClose} style={notesSaveButtonStyle}>
-          <FontAwesomeIcon icon={faX} />
-        </button>
+          <button onClick={onClose} style={notesSaveButtonStyle}>
+            <FontAwesomeIcon icon={faX} />
+          </button>
+        </div>
       </div>
     </>
   );

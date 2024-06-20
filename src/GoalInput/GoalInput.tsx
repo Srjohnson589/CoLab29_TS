@@ -129,6 +129,7 @@ const GoalInput: React.FC<Props> = ({ setShowPencil, setGoal, setSubtasksList, u
     position: 'fixed',
     bottom: '150px',
     padding: '32px',
+    paddingBottom: '40px',
     right: '40px',
     zIndex: 999,
     display: 'flex',

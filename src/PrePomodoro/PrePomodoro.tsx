@@ -131,61 +131,49 @@ const PrePomodoro: React.FC<Props> = ({ goal, subtasksList, onSubtaskClick, hand
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'stretch',
-    minWidth: '375px',
-    padding: '24px',
+    padding: '32px',
     backgroundColor: '#F8F9FF',
     borderRadius: '12px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    width: '450px',
+    width: '480px',
     height: '500px',
     border: '1px solid #D0D5DD',
     fontFamily: 'Inter, sans-serif',
-    position: 'relative', 
-  };
-
-  const backButtonStyle: React.CSSProperties = {
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#38608F',
-    cursor: 'pointer',
-    fontSize: '24px',
-    padding: '0',
-    margin: '0',
-    position: 'absolute', 
-    top: '10px',
-    left: '10px',
+    position: 'relative',
   };
 
   const goalStyle: React.CSSProperties = {
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 500,
-    fontFamily: 'Arial',
-    marginBottom: '16px',
+    fontFamily: 'Roboto',
+    margin: 0,
+  };
+
+  const multipleSubtaskContainerStyle: React.CSSProperties = {
+    height: '340px',
+    overflowY: 'scroll'
   };
 
   const subtaskContainerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    backgroundColor: '#38608F',
+    backgroundColor: 'rgba(56, 96, 143, 0.05)',
     border: '1px solid #C3C6CF',
-    borderRadius: '8px',
-    padding: '12px 16px',
-    marginBottom: '8px',
-
+    borderRadius: '12px',
+    padding: '16px',
+    height: '82px',
+    marginBottom: '16px',
   };
 
   const subtaskTitleStyle: React.CSSProperties = {
     flex: 1,
-    padding: '8px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    marginRight: '8px',
     fontSize: '16px',
-    fontWeight: 500,
+    fontWeight: 400,
     marginBottom: '8px',
+    fontFamily: 'Roboto',
   };
 
   const subtaskButtonsStyle: React.CSSProperties = {
@@ -198,37 +186,49 @@ const PrePomodoro: React.FC<Props> = ({ goal, subtasksList, onSubtaskClick, hand
     padding: '8px 12px',
     border: '1px solid #E0E0E0',
     borderRadius: '4px',
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: 'Roboto',
     fontSize: '14px',
   };
 
   const buttonStyle: React.CSSProperties = {
-    padding: '8px 14px',
-    backgroundColor: '#38608F',
-    color: '#FFFFFF',
-    borderRadius: '4px',
-    border: '1px solid #DCDFEA',
+    backgroundColor: 'transparent',
+    color: 'rgba(34, 25, 26, 1)',
     cursor: 'pointer',
+    border: 'none',
     marginRight: '8px',
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: 'Roboto',
     fontSize: '14px',
+    fontWeight: 400,
+  };
+
+  const startButtonStyle: React.CSSProperties = {
+    ...buttonStyle,
+    backgroundColor: 'rgba(56, 96, 143, 1)',
+    color: 'rgba(255, 255, 255, 1)',
+    fontSize: '14px', 
     fontWeight: 500,
+    padding: '8px 14px',
+    borderRadius: '8px',
+
   };
 
   const addButtonStyle: React.CSSProperties = {
     ...buttonStyle,
-    backgroundColor: '#F0F0F0',
-    color: '#38608F',
-    marginTop: '16px',
+    backgroundColor: 'rgba(215, 227, 248, 1)',
+    color: 'rgba(16, 28, 43, 1)',
+    padding: '8px 14px',
+    fontWeight: 500,
+    fontSize: '14px',
+    borderRadius: '8px'
   };
 
   const completedStyle: React.CSSProperties = {
     textDecoration: 'line-through',
-    color: 'red',
+    color: 'gray',
   };
 
   return (
-    <div style={containerStyle}>
+    <>
       {showAssessment ? (
         <Assessment
           onAssessmentSubmit={(assessment: AssessmentData) => handleAssessmentSubmit(assessment)}
@@ -237,22 +237,19 @@ const PrePomodoro: React.FC<Props> = ({ goal, subtasksList, onSubtaskClick, hand
       ) : (
         <>
           {showPomodoroTimer ? (
-            <div style={{ width: '300px', height: '400px', margin: '0 auto' }}>
-              <button style={backButtonStyle} onClick={() => setShowPomodoroTimer(false)}>
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </button>
               <PomodoroTimer
+                setShowPomodoroTimer={setShowPomodoroTimer}
                 onTimerStart={handleTimerStart}
                 onTimerFinish={handleTimerFinish}
                 subtaskTitle={activeSubtask ? activeSubtask.title : ''}
                 subtaskList={[]}
                 goal={goal}
               />
-            </div>
           ) : (
             <>
+              <div style={containerStyle}>
               <h2 style={goalStyle}>{goal}</h2>
-              <div>
+              <div style={multipleSubtaskContainerStyle}>
                 {subtasks.map((subtask) => (
                   <div key={subtask.id} style={subtaskContainerStyle}>
                     <div style={subtaskTitleStyle}>
@@ -277,14 +274,14 @@ const PrePomodoro: React.FC<Props> = ({ goal, subtasksList, onSubtaskClick, hand
                         }}
                         style={buttonStyle}
                       >
-                        <FontAwesomeIcon icon={faPlay} /> Start Timer
+                        <FontAwesomeIcon icon={faPlay} style={{marginRight: '5px'}}/> Start Timer
                       </button>
                       <button onClick={() => handleEditSubtask(subtask.id)} style={buttonStyle}>
-                        <FontAwesomeIcon icon={faPencilAlt} /> Edit Task
+                        <FontAwesomeIcon icon={faPencilAlt} style={{marginRight: '5px'}}/> Edit Task
                       </button>
                       {subtask.completed && (
                         <button onClick={() => handleRedoSubtask(subtask)} style={buttonStyle}>
-                          <FontAwesomeIcon icon={faRepeat} /> Repeat Task
+                          <FontAwesomeIcon icon={faRepeat} style={{marginRight: '5px'}}/> Repeat Task
                         </button>
                       )}
                     </div>
@@ -292,23 +289,25 @@ const PrePomodoro: React.FC<Props> = ({ goal, subtasksList, onSubtaskClick, hand
                 ))}
               </div>
               <div>
-                <button onClick={handleStartPomodoroTimer} style={addButtonStyle}>
-                  Start Pomodoro Timer <FontAwesomeIcon icon={faPlay} />
+                <button onClick={handleStartPomodoroTimer} style={startButtonStyle}>
+                  Start Pomodoro Timer <FontAwesomeIcon icon={faPlay} style={{marginLeft: '5px'}}/>
                 </button>
                 <button onClick={handleAddSubtask} style={addButtonStyle}>
-                  Add Subtask <FontAwesomeIcon icon={faPlus} />
+                  Add Subtask <FontAwesomeIcon icon={faPlus} style={{marginLeft: '5px'}} />
                 </button>
                 {subtasks.every((subtask) => subtask.completed) && (
                   <button onClick={handleEndSession} style={addButtonStyle}>
-                    End Session <FontAwesomeIcon icon={faCheck} />
+                    End Session <FontAwesomeIcon icon={faCheck} style={{marginLeft: '5px'}}/>
                   </button>
                 )}
+              </div>
               </div>
             </>
           )}
         </>
       )}
-    </div>
+    
+    </>
   );
 };
 

@@ -9,7 +9,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
@@ -25,7 +26,8 @@ module.exports = {
         test: /\.css$/i,
         use:['style-loader', 'css-loader']
       },
-    ]
+    ],
+    
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -41,5 +43,10 @@ module.exports = {
       ]
     })
   ],
-  devtool: 'inline-source-map'
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 9000,
+  },
 };

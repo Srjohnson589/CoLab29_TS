@@ -76,7 +76,7 @@ const Alert: React.FC<Props> = ({ setShowAlert, setUserStatus }) => {
             onMouseLeave={()=> setHovered(!isHovered)}
             onClick={()=>{setShowAlert(false)}}>Cancel</button>
           <button 
-            style={{...alertBtnStyle, color: isClearHovered ? 'white' : 'black', backgroundColor: isClearHovered ? 'red' : 'transparent'}}
+            style={{...alertBtnStyle, color: isClearHovered ? 'white' : 'black', backgroundColor: isClearHovered ? 'rgba(56, 96, 143, 1)' : 'transparent'}}
             onMouseEnter={()=> setClearHovered(!isClearHovered)}
             onMouseLeave={()=> setClearHovered(!isClearHovered)}
             onClick={() => {clearUserGoal()}}

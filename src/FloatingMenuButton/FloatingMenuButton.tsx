@@ -14,6 +14,7 @@ interface Props {
   handleAssessmentSubmit: (assessment: Assessment) => void;
   handleBackClick: () => void;
 }
+
 interface Subtask {
   id: number;
   title: string;
@@ -207,7 +208,7 @@ const FloatingMenuButton: React.FC<Props> = () => {
   return (
     <>
       <button style={buttonStyle} onClick={handleClick}>
-        <FontAwesomeIcon icon={menuOpen ? faX : faCube} />
+        <FontAwesomeIcon icon={ menuOpen ? faX : faCube} />
       </button>
       {menuOpen && (
         <>
@@ -289,6 +290,7 @@ const FloatingMenuButton: React.FC<Props> = () => {
           zIndex: 1000,
           }}>
           <PomodoroTimer
+          setShowPomodoroTimer={setShowPomodoro}
           onTimerStart={handleTimerStart} 
           onTimerFinish={handleTimerFinish} 
           subtaskTitle={subtaskTitle}

@@ -7,15 +7,16 @@ import 'react-circular-progressbar/dist/styles.css';
 import QuickNotes from '../QuickNotes/QuickNotes';
 
 interface Props {
+  setShowPomodoroTimer:  React.Dispatch<React.SetStateAction<boolean>>;
   onTimerStart: () => void;
-  onTimerFinish: () => void
+  onTimerFinish: () => void;
   subtaskTitle: string;
   goal: string;
   subtaskList: string[];
 
 }
 
-const PomodoroTimer: React.FC<Props> = ({ onTimerStart, onTimerFinish, goal, subtaskTitle, subtaskList }) => {
+const PomodoroTimer: React.FC<Props> = ({ setShowPomodoroTimer, onTimerStart, onTimerFinish, goal, subtaskTitle, subtaskList }) => {
   const [time, setTime] = useState(1500);
   const [isRunning, setIsRunning] = useState(false);
   const [isCustomTime, setIsCustomTime] = useState(false);
@@ -103,40 +104,43 @@ const PomodoroTimer: React.FC<Props> = ({ onTimerStart, onTimerFinish, goal, sub
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const timerHeaderStyle:  React.CSSProperties =  {
-    fontSize: '24px',
-    fontWeight:  'bold',
-    marginBottom: '20px',
-    textAlign:  'center',
+  const backButtonStyle: React.CSSProperties = {
+    backgroundColor: 'transparent',
+    border: 'none',
     color: '#38608F',
+    cursor: 'pointer',
+    fontSize: '16px',
+    padding: '0',
+    margin: '0',
+  };
+
+  const subtaskTitleStyle:  React.CSSProperties =  {
+    fontSize: '16px',
+    fontWeight: 400,
+    margin: 0,
+    padding: 0,
+    fontFamily: 'Roboto',
+    textAlign:  'left',
+    color: 'rgba(34, 25, 26, 1)',
   }
 
   const timerContainerStyle: React.CSSProperties = {
     position: 'fixed',
-    bottom: '150px',
+    bottom: '20px',
     right: '100px',
     backgroundColor: '#F8F9FF',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '300px',
-    height: '240px',
+    padding: '16px',
+    borderRadius: '12px',
   };
 
   const timerCircleStyle: React.CSSProperties = {
-    width: '200px',
-    height: '200px',
+    width: '184px',
     backgroundColor: '#D7E3F8',
-    borderRadius: '50px',
+    borderRadius: '10px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBlock: '20px',
   };
 
   const timerTextStyle: React.CSSProperties = {
@@ -161,11 +165,21 @@ const PomodoroTimer: React.FC<Props> = ({ onTimerStart, onTimerFinish, goal, sub
   };
 
   
-
   return (
     <div style={timerContainerStyle}>
-<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <h3 style={timerHeaderStyle}>{subtaskTitle}</h3>
+
+      {subtaskTitle && 
+      <>
+      <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 12px 14px 12px'}}>
+        <h3 style={subtaskTitleStyle}>
+          {subtaskTitle}</h3>
+        <FontAwesomeIcon icon={faArrowLeft} style={backButtonStyle} onClick={() => setShowPomodoroTimer(false)} />
+      </div>
+      </>
+      }
+
+
+      <div style={{display: 'flex', gap: '12px'}}>
 
       {/* Circular Timer */}
       <div style={timerCircleStyle}>
@@ -226,7 +240,7 @@ const PomodoroTimer: React.FC<Props> = ({ onTimerStart, onTimerFinish, goal, sub
               borderRadius: '4px',
               border: '1px solid #38608F',
               marginRight: '8px',
-              width: '80px',
+              width: '280px',
               textAlign: 'center',
               fontSize: '16px',
             }}
@@ -239,8 +253,8 @@ const PomodoroTimer: React.FC<Props> = ({ onTimerStart, onTimerFinish, goal, sub
 {/* ShowNotes Button and Div */}
       
           {showNotes ? 
-          (<div style={{ padding: '10px' }}> 
-            <QuickNotes onClose={toggleNotes} /></div>) :
+          (
+            <QuickNotes onClose={toggleNotes} />) :
           <div
             style={{
               backgroundColor: '#38608F',
@@ -256,7 +270,7 @@ const PomodoroTimer: React.FC<Props> = ({ onTimerStart, onTimerFinish, goal, sub
           </div>
           }
         
-  </div>
+    </div>
   </div>
   );
 };
